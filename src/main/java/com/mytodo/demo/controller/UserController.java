@@ -13,7 +13,7 @@ import com.mytodo.demo.service.UserService;
 @RestController
 public class UserController {
 	
-	@Autowired
+	@Autowired(required = true)
 	private UserService userService;
 	
 	@GetMapping("/login")
