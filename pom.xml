@@ -12,6 +12,7 @@
 	<artifactId>MyToDoList</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>MyToDoList</name>
+	<packaging>jar</packaging>
 	<description>ToDo List</description>
 	<properties>
 		<java.version>14</java.version>
