@@ -1,6 +1,5 @@
 FROM maven:3.8.1-openjdk-15 AS build
 
-MAINTAINER hntrivedi72@gmail.com
 COPY ./ ./
 RUN mvn clean package
 FROM openjdk:14-ea-18-jdk
