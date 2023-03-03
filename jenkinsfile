@@ -78,26 +78,23 @@ pipeline {
         stage('Upload Nexus Repo'){
             steps{
                 script{
-                    def readPomVersion=readMavenPom file: 'pom.xml'
-                    def nexusType=readPomVersion.version.endsWith('SNAPSHOT')?"MyToDoList":"MyToDoList-Release"
-                    nexusArtifactUploader artifacts: 
-                        [
-                            [
-                                artifactId: 'MyToDoList', 
-                                classifier: '', 
-                                file: 'target/MyToDoList-0.0.1-SNAPSHOT.jar', 
-                                type: 'jar'
-                            ]
-                        ], 
-                        credentialsId: 'nexus-auth', 
-                        groupId: 'com.mytodo', 
-                        nexusUrl: 'localhost:8081', 
-                        nexusVersion: 'nexus3', protocol: 'http', 
-						repository: 'MyToDoList'
-						//repository: nexusType, 
-						version: '0.0.1-SNAPSHOT'
-						//version: '${readPomVersion.version}'
-                }
+					nexusArtifactUploader artifacts: 
+					[
+						[
+							artifactId: 'MyToDoList', 
+							classifier: '', 
+							file: 'target/MyToDoList-0.0.1-SNAPSHOT.jar', 
+							type: 'jar'
+						]
+					], 
+					credentialsId: 'nexus-auth', 
+					groupId: 'com.mytodo', 
+					nexusUrl: 'localhost:8081', 
+					nexusVersion: 'nexus3', 
+					protocol: 'http', 
+					repository: 'MyToDoList', 
+					version: '0.0.1-SNAPSHOT'
+				}
             }
         }
 		
