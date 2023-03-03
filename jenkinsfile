@@ -92,7 +92,11 @@ pipeline {
                         credentialsId: 'nexus-auth', 
                         groupId: 'com.mytodo', 
                         nexusUrl: 'localhost:8081', 
-                        nexusVersion: 'nexus3', protocol: 'http', repository: nexusType, version: '${readPomVersion.version}'
+                        nexusVersion: 'nexus3', protocol: 'http', 
+						repository: 'MyToDoList'
+						//repository: nexusType, 
+						version: '0.0.1-SNAPSHOT'
+						//version: '${readPomVersion.version}'
                 }
             }
         }
