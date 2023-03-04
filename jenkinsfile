@@ -101,7 +101,7 @@ pipeline {
 		stage('Create Docker Image'){
 			steps{
 				script{
-					bat 'docker image build -t mytodolist:v1.$BUILD_ID'
+					bat 'docker image build -t mytodolist-v1.$BUILD_ID'
 					bat 'docker image tag mytodolist:v1.$BUILD_ID htri1207/mytodolist:v1.$BUILD_ID'
 					bat 'docker image tag mytodolist:v1.$BUILD_ID htri1207/mytodolist:latest'
 				}
