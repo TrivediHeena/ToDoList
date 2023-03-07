@@ -101,11 +101,17 @@ pipeline {
 		stage('Create Docker Image'){
 			steps{
 				script{
-					bat 'docker build . -t mytodolist'
-					bat 'docker image tag mytodolist-v1.$BUILD_ID htri1207/mytodolist-v1.$BUILD_ID'
-					bat 'docker image tag mytodolist-v1.$BUILD_ID htri1207/mytodolist-latest'
+					bat 'docker-compose up -d --build'
+					bat 'docker-compose ps'
+					withCredentials([string(credentialsId: 'git_creds', variable: 'docker_hub_cred')]) {
+						bat 'docker login -u htri1207 -p ${docker_hub_cred}'
+						bat 'docker-compose push htri1207/mytodolist'
+					}
+					//bat 'docker image tag mytodolist-v1.$BUILD_ID htri1207/mytodolist-v1.$BUILD_ID'
+					//bat 'docker image tag mytodolist-v1.$BUILD_ID htri1207/mytodolist-latest'
 				}
 			}
         }
+		
     }
 }
