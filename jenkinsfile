@@ -24,7 +24,7 @@ pipeline {
                 //sh "mvn -Dmaven.test.failure.ignore=true clean package"
 
                 // To run Maven on a Windows agent, use
-                bat "mvn -Dmaven.test.failure.ignore=true clean package"
+                bat "mvn -Dmaven.test.failure.ignore=true clean package -Pdocker"
                 //bat 'mvn -DskipTests clean package -Pdocker'
                 }
             }
@@ -52,14 +52,11 @@ pipeline {
                 SCANNER_HOME = tool 'SonarQubeScanner'
             }
             steps{
-                //echo 'analyzing...'
-                //bat 'mvn sonar:sonar -Dsonar.projectKey=MyToDoList -Dsonar.host.url=http://localhost:9000 -Dsonar.login=c34579f3d44f4cfcceb0396763fea3fa45ed0647'
+                echo 'analyzing...'
+                
                 withSonarQubeEnv('SonarQube') {
                     
-                    bat 'mvn sonar:sonar -Dsonar.projectKey=MyToDoList -Dsonar.host.url=http://localhost:9000'// -Dsonar.login=c34579f3d44f4cfcceb0396763fea3fa45ed0647'
-                     //bat 'mvn clean package sonar:sonar -DskipTests -Dsonar.projectKey=MyToDoList -Dsonar.sources=. -Dsonar.tests=. -Dsonar.test.exclusions=src/test/java/**'
-                     //'${SCANNER_HOME}/bin/sonar-scanner -Dsonar.projectKey=MyToDoList -Dsonar.exclusions=**/test/**'
-                     //src/test/java/com/mytodo/demo/MyToDoListApplicationTests.java -Dsonar.test.inclusions=src/test/java/**
+                    bat 'mvn sonar:sonar -Dsonar.projectKey=MyToDoList -Dsonar.host.url=http://localhost:9000 -Pdocker'
                   }
             }
         }
