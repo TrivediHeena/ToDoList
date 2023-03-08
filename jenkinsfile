@@ -25,7 +25,7 @@ pipeline {
 
                 // To run Maven on a Windows agent, use
                 bat "mvn -Dmaven.test.failure.ignore=true clean package"
-                //bat 'mvn -DskipTests clean package'
+                //bat 'mvn -DskipTests clean package -Pdocker'
                 }
             }
               
@@ -37,13 +37,13 @@ pipeline {
                 //sh 'mvn test'
                 
                 //with windows
-                bat 'mvn -o test'
+                bat 'mvn -o test -Pdocker'
             }
         }
         stage('Integration Test'){
             steps{
                 echo "Integration Testing working..."
-                bat 'mvn verify -DskipUnitTests'
+                bat 'mvn verify -DskipUnitTests -Pdocker'
                 //sh 'mvn verify -DskipUnitTests'
             }
         }
@@ -71,7 +71,7 @@ pipeline {
         }
         stage('Install'){
             steps{
-                bat 'mvn clean install'
+                bat 'mvn clean install -Pdocker'
             }
         }
         
