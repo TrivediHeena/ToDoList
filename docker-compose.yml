@@ -12,10 +12,9 @@ services:
     container_name: mytodolist
     build:
       context: ./
-      dockerfile: Dockerfile
-      image: htri1207/mytodolist
+      dockerfile: Dockerfile      
     ports:
       - 8089:8080
     depends_on:
       - mysqldb
-    restart: always #on-failure
+    restart: on-failure

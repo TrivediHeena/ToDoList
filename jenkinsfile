@@ -24,8 +24,8 @@ pipeline {
                 //sh "mvn -Dmaven.test.failure.ignore=true clean package"
 
                 // To run Maven on a Windows agent, use
-                bat "mvn -Dmaven.test.failure.ignore=true clean package -Pdocker"
-                //bat 'mvn -DskipTests clean package -Pdocker'
+                bat "mvn -Dmaven.test.failure.ignore=true clean package"
+                //bat 'mvn -DskipTests clean package'
                 }
             }
               
@@ -37,13 +37,13 @@ pipeline {
                 //sh 'mvn test'
                 
                 //with windows
-                bat 'mvn -o test -Pdocker'
+                bat 'mvn -o test'
             }
         }
         stage('Integration Test'){
             steps{
                 echo "Integration Testing working..."
-                bat 'mvn verify -DskipUnitTests -Pdocker'
+                bat 'mvn verify -DskipUnitTests'
                 //sh 'mvn verify -DskipUnitTests'
             }
         }
@@ -56,7 +56,7 @@ pipeline {
                 
                 withSonarQubeEnv('SonarQube') {
                     
-                    bat 'mvn sonar:sonar -Dsonar.projectKey=MyToDoList -Dsonar.host.url=http://localhost:9000 -Pdocker'
+                    bat 'mvn sonar:sonar -Dsonar.projectKey=MyToDoList -Dsonar.host.url=http://localhost:9000'
                   }
             }
         }
@@ -68,7 +68,7 @@ pipeline {
         }
         stage('Install'){
             steps{
-                bat 'mvn clean install -Pdocker'
+                bat 'mvn clean install'
             }
         }
         
@@ -98,11 +98,11 @@ pipeline {
 		stage('Create Docker Image'){
 			steps{
 				script{
-					bat 'docker-compose up -d --build'
-					bat 'docker-compose ps'
+					bat 'docker build -t mytodolist'
+					bat 'docker image tag mytodolist htri1207/mytodolist:latest'
 					withCredentials([string(credentialsId: 'git_creds', variable: 'docker_hub_cred')]) {
 						bat 'docker login -u htri1207 -p ${docker_hub_cred}'
-						bat 'docker-compose push htri1207/mytodolist'
+						bat 'docker image push htri1207/mytodolist:latest'
 					}
 					//bat 'docker image tag mytodolist-v1.$BUILD_ID htri1207/mytodolist-v1.$BUILD_ID'
 					//bat 'docker image tag mytodolist-v1.$BUILD_ID htri1207/mytodolist-latest'
