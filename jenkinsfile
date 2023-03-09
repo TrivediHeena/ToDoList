@@ -54,8 +54,7 @@ pipeline {
             steps{
                 echo 'analyzing...'
                 
-                withSonarQubeEnv('SonarQube') {
-                    
+                withSonarQubeEnv('SonarQube') {                    
                     bat 'mvn sonar:sonar -Dsonar.projectKey=MyToDoList -Dsonar.host.url=http://localhost:9000'
                   }
             }
@@ -98,7 +97,7 @@ pipeline {
 		stage('Create Docker Image'){
 			steps{
 				script{
-					bat 'docker build -t mytodolist'
+					bat 'docker image build -t mytodolist .'
 					bat 'docker image tag mytodolist htri1207/mytodolist:latest'
 					withCredentials([string(credentialsId: 'git_creds', variable: 'docker_hub_cred')]) {
 						bat 'docker login -u htri1207 -p ${docker_hub_cred}'
