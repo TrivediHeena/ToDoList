@@ -107,7 +107,8 @@ pipeline {
 			steps{
 				script{	
 						withCredentials([string(credentialsId: 'dockerhub_pwd', variable: 'docker_hub_cred')]) {
-							bat 'docker login -u htri1207 -p $docker_hub_cred'
+							//sh 'docker login -u htri1207 -p $docker_hub_cred'
+							bat 'docker login -u htri1207 -p %docker_hub_cred%'
 							bat 'docker image push htri1207/mytodolist:latest'
 						}
 					
