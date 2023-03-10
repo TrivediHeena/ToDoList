@@ -106,8 +106,8 @@ pipeline {
 		stage('Push image to docker hub'){
 			steps{
 				script{
-					withCredentials([string(credentialsId: 'git_creds', variable: 'docker_hub_cred')]) {
-						bat 'docker login -u htri1207 -p ${docker_hub_cred}'
+					withCredentials([string(credentialsId: '7ea1427e-9234-417a-9d25-ad338bc01ff6', variable: 'dockerhub_pwd')]) {
+						bat 'docker login -u htri1207 -p ${dockerhub_pwd}'
 						bat 'docker image push htri1207/mytodolist:latest'
 					}
 				}
