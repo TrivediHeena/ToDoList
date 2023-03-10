@@ -108,9 +108,9 @@ pipeline {
 				script{					
 						bat 'docker login -u htri1207 --password-stdin'
 						bat 'docker image push htri1207/mytodolist:latest'
-					}
 				}
 			}
 		}
-    }
+	}
+    
 }
