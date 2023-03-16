@@ -1,0 +1,17 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: mytodolist_deployment
+spec:
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: mytodolist_deployment
+    spec:
+      containers:
+      - image: htri1207/mytodolist
+        name: mytodolist_deployment
+        ports:
+        - containerPort: 8089
+          name: http
