@@ -1,0 +1,51 @@
+pipeline{
+	agent any
+	parameters{
+		choice(name: 'os',choices: 'Windows\nUbuntu',description: 'select appropriate OS') 
+	}
+	stages{
+		/*stage('git checkout'){
+			steps{
+				script{
+					git branch: 'master',url: 'https://github.com/TrivediHeena/ToDoList.git'
+				}
+			}
+		}*/
+		stage('deploy on Windows'){
+			when{ expression {params.os=='Windows'} }
+			steps{
+				script{
+					def apply = false
+					try{
+						input message: 'please confirm apply to initiate the deployment on windows',  ok: 'Ready to apply?'
+						apply = true
+					}catch(err){
+						apply = false
+						currentBuild.result ='UNSTABLE'
+					}
+					if(apply){
+						bat 'kubectl apply -f kube_deploy.yml'
+					}
+				}
+			}
+		}
+		stage('deploy on Ubuntu'){
+			when{ expression {params.os=='Ubuntu'} }
+			steps{
+				script{
+					def apply = false
+					try{
+						input message: 'please confirm apply to initiate the deployment on ubuntu',  ok: 'Ready to apply?'
+						apply = true
+					}catch(err){
+						apply = false
+						currentBuild.result ='UNSTABLE'
+					}
+					if(apply){
+						sh 'kubectl apply -f kube_deploy.yml'
+					}
+				}
+			}
+		}
+	}
+}

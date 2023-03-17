@@ -12,6 +12,21 @@ spec:
       containers:
       - image: htri1207/mytodolist
         name: mytodolist_deployment
+        imagePullPolicy: Always
         ports:
         - containerPort: 8089
           name: http
+          
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: mytodolist_service
+spec:
+  selector:
+    app: mytodolist_deployment
+  ports:
+    - nodePort: 30036
+      port: 80
+      targetPort: 8089
+  type: LoadBalancer
