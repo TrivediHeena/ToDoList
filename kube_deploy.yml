@@ -1,17 +1,20 @@
 kind: Deployment
 apiVersion: apps/v1
 metadata:
-  name: mytodolist_deployment
+  name: mytodolist-deployment
 spec:
   replicas: 2
+  selector:
+    matchLabels:
+      app: mytodolist-deployment
   template:
     metadata:
       labels:
-        app: mytodolist_deployment
+        app: mytodolist-deployment
     spec:
       containers:
       - image: htri1207/mytodolist
-        name: mytodolist_deployment
+        name: mytodolist-deployment
         imagePullPolicy: Always
         ports:
         - containerPort: 8089
@@ -21,10 +24,10 @@ spec:
 kind: Service
 apiVersion: v1
 metadata:
-  name: mytodolist_service
+  name: mytodolist-service
 spec:
   selector:
-    app: mytodolist_deployment
+    app: mytodolist-deployment
   ports:
     - nodePort: 30036
       port: 80
